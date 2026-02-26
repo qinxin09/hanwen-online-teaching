@@ -1,5 +1,5 @@
 <!--
-组员：夏少聪
+组员：xiashaocong
 功能：修改管理员权限
 -->
 <template>

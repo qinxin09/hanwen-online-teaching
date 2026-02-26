@@ -1,5 +1,5 @@
 /**
- * 组员：史博文
+ * 组员：shibowen
  * 功能：本地存储，保存/获取要播放的合集的数据
  * @type {{setVideoGroup: StorageUtils.setVideoGroup, getVideoGroup: (function(): any)}}
  */

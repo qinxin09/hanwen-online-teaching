@@ -1,6 +1,6 @@
 <!--
 二次开发
-组员：杨万胜
+组员：yws
 功能：附件图标，展示附件项目-->
 <template>
     <div style="width:100%;padding:10px;">

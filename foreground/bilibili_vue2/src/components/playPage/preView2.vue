@@ -1,6 +1,6 @@
 <!--
 二次开发
-组员：夏少聪
+组员：xiashaocong
 功能：预览附件，pdf、图片-->
 <template>
     <div>

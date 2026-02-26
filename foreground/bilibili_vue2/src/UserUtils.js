@@ -1,5 +1,5 @@
 /**
- *  杨万胜
+ *  yws
  *  获取用户相关信息、完成用户的请求
  */
 import axios from 'axios';

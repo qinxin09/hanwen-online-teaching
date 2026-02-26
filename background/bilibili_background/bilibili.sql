@@ -2,7 +2,8 @@
 SQLyog Ultimate v12.08 (64 bit)
 MySQL - 8.0.15 : Database - bilibili
 *********************************************************************
-*/
+*/
+
 
 /*!40101 SET NAMES utf8 */;
 
@@ -31,7 +32,7 @@ CREATE TABLE `admin` (
 
 /*Data for the table `admin` */
 
-insert  into `admin`(`id`,`name`,`password`,`phone`,`lv`) values (6,'0958','e10adc3949ba59abbe56e057f20f883e','18166950958',0),(9,'0951','e10adc3949ba59abbe56e057f20f883e','18166950951',2),(10,'0952','81dc9bdb52d04dc20036dbd8313ed055','18166950952',3),(20,'qx','e10adc3949ba59abbe56e057f20f883e','18166950000',3),(21,'123','e10adc3949ba59abbe56e057f20f883e','18166950955',3);
+insert  into `admin`(`id`,`name`,`password`,`phone`,`lv`) values (6,'0957','e10adc3949ba59abbe56e057f20f883e','18166950950',0),(9,'0951','e10adc3949ba59abbe56e057f20f883e','18166950951',2),(10,'0952','81dc9bdb52d04dc20036dbd8313ed055','18166950952',3),(20,'qx','e10adc3949ba59abbe56e057f20f883e','18166950000',3),(21,'123','e10adc3949ba59abbe56e057f20f883e','18166950955',3);
 
 /*Table structure for table `admintree` */
 
@@ -129,7 +130,7 @@ CREATE TABLE `user` (
 
 /*Data for the table `user` */
 
-insert  into `user`(`id`,`name`,`password`,`email`,`phone`,`status`,`create_time`,`last_login_time`,`sex`,`age`) values (30,'0958','e10adc3949ba59abbe56e057f20f883e',NULL,'18166950958',1,'2023-06-19 20:36:52',NULL,1,23),(31,'18166950951','e10adc3949ba59abbe56e057f20f883e',NULL,'18166950951',1,'2023-06-21 09:48:07',NULL,1,23);
+insert  into `user`(`id`,`name`,`password`,`email`,`phone`,`status`,`create_time`,`last_login_time`,`sex`,`age`) values (30,'0957','e10adc3949ba59abbe56e057f20f883e',NULL,'18166950950',1,'2023-06-19 20:36:52',NULL,1,23),(31,'18166950951','e10adc3949ba59abbe56e057f20f883e',NULL,'18166950951',1,'2023-06-21 09:48:07',NULL,1,23);
 
 /*Table structure for table `videogroup` */
 

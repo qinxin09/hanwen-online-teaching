@@ -1,5 +1,5 @@
 <!--
-组员：夏少聪
+组员：xiashaocong
 功能：添加管理员
 -->
 <template>

@@ -1,5 +1,5 @@
 <!-- 
-  组员：夏少聪
+  组员：xiashaocong
   功能：用户注册的表单
  -->
  <template>
