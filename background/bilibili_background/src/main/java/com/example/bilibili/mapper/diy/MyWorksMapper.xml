@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bilibili.dao.diy.MyWorksMapper">
+    <resultMap id="myworks" type="com.example.bilibili.pojo.diy.MyWorks">
+        <id property="id" column="works_id"></id>
+        <result property="taskid" column="taskid"></result>
+        <result property="videoName" column="video_name"></result>
+        <result property="videoLength" column="video_length"></result>
+        <result property="url" column="url"></result>
+        <result property="state" column="video_state"></result>
+        <result property="videoDesc" column="video_desc"></result>
+
+        <result property="userId" column="user_id"></result>
+        <result property="userName" column="user_name"></result>
+
+        <result property="taskName" column="task_name"></result>
+
+
+        <collection property="VoteList"
+                    ofType="com.example.bilibili.pojo.Votes">
+<!--            <id property="touristId" column="tourist_id" ></id>-->
+            <result property="touristId" column="tourist_id" ></result>
+            <result property="worksId" column="works_id" ></result>
+            <result  property="date" column="vote_date"></result>
+            <result  property="num" column="vote_num"></result>
+        </collection>
+
+
+    </resultMap>
+    <select id="getActiveWorks" resultMap="myworks">
+        SELECT
+            works.id AS works_id,
+            works.`taskid` AS taskid,
+            works.`video_name` AS video_name,
+            works.`video_length` AS video_length,
+            works.`url` AS url,
+            works.`state` AS video_state,
+            works.`video_desc` AS video_desc,
+
+            user.`id` AS user_id,
+            user.`name` AS user_name,
+
+            tasks.`name` AS task_name,
+
+            votes.`tourist_id` AS tourist_id,
+            votes.`num` AS vote_num,
+            votes.`date` AS vote_date
+
+        FROM works
+                 INNER JOIN USER ON works.user_id = `user`.id
+                 INNER JOIN tasks ON tasks.id = works.taskid
+                 LEFT JOIN votes ON works.id = votes.works_id
+        WHERE works.state!=0 ;
+    </select>
+
+    <select id="getAllWorks"  resultMap="myworks">
+        SELECT
+            works.id AS works_id,
+            works.`taskid` AS taskid,
+            works.`video_name` AS video_name,
+            works.`video_length` AS video_length,
+            works.`url` AS url,
+            works.`state` AS video_state,
+            works.`video_desc` AS video_desc,
+
+            user.`id` AS user_id,
+            user.`name` AS user_name,
+
+            tasks.`name` AS task_name,
+
+            votes.`tourist_id` AS tourist_id,
+            votes.`num` AS vote_num,
+            votes.`date` AS vote_date
+
+        FROM works
+                 INNER JOIN USER ON works.user_id = `user`.id
+                 INNER JOIN tasks ON tasks.id = works.taskid
+                 LEFT JOIN votes ON works.id = votes.works_id;
+    </select>
+
+    <delete id="deleteWorks" parameterType="java.lang.String">
+        DELETE works,votes
+        FROM works LEFT JOIN votes ON votes.works_id = works.id
+        WHERE works.id = '${id}'
+    </delete>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bilibili.dao.diy.MyWorksMapper">
+    <resultMap id="myworks" type="com.example.bilibili.pojo.diy.MyWorks">
+        <id property="id" column="id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="taskid" column="taskid"></result>
+        <result property="videoName" column="video_name"></result>
+        <result property="videoLength" column="video_length"></result>
+        <result property="url" column="url"></result>
+        <result property="state" column="state"></result>
+        <result property="videoDesc" column="video_desc"></result>
+        <result property="userName" column="user_name"></result>
+        <result property="taskName" column="task_name"></result>
+        <collection property="VoteList"
+                    ofType="com.example.bilibili.pojo.diy.MyWorks">
+            <id property="touristId" column="p_id" ></id>
+            <result property="worksId" column="p_name" ></result>
+            <result  property="date" column="p_price"></result>
+            <result  property="num" column="p_number"></result>
+        </collection>
+
+
+    </resultMap>
+    <select id="getActiveWorks"  resultMap="myworks">
+        select works.*,user.name as user_name,tasks.name as task_name from works,user,tasks where works.user_id = user.id and works.taskid = tasks.id;
+    </select>
+
+
+</mapper>

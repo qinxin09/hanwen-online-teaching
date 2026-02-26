@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bilibili.dao.VideoGroupMapper">
+  <resultMap id="BaseResultMap" type="com.example.bilibili.pojo.VideoGroup">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="author_id" jdbcType="BIGINT" property="authorId" />
+    <result column="brief" jdbcType="VARCHAR" property="brief" />
+    <result column="cover_url" jdbcType="VARCHAR" property="coverUrl" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="istoll" jdbcType="BIT" property="istoll" />
+    <result column="price" jdbcType="DECIMAL" property="price" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="play_count" jdbcType="BIGINT" property="playCount" />
+    <result column="comment_count" jdbcType="BIGINT" property="commentCount" />
+    <result column="attachement_names" jdbcType="VARCHAR" property="attachementNames" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.bilibili.pojo.VideoGroupWithBLOBs">
+    <result column="catagory" jdbcType="LONGVARCHAR" property="catagory" />
+    <result column="videos" jdbcType="LONGVARCHAR" property="videos" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, author_id, brief, cover_url, create_time, istoll, price, state, play_count, 
+    comment_count, attachement_names
+  </sql>
+  <sql id="Blob_Column_List">
+    catagory, videos
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.bilibili.pojo.VideoGroupExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from videogroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.bilibili.pojo.VideoGroupExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from videogroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from videogroup
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from videogroup
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bilibili.pojo.VideoGroupExample">
+    delete from videogroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bilibili.pojo.VideoGroupWithBLOBs">
+    insert into videogroup (id, title, author_id, 
+      brief, cover_url, create_time, 
+      istoll, price, state, play_count, 
+      comment_count, attachement_names, catagory, 
+      videos)
+    values (#{id,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, #{authorId,jdbcType=BIGINT}, 
+      #{brief,jdbcType=VARCHAR}, #{coverUrl,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{istoll,jdbcType=BIT}, #{price,jdbcType=DECIMAL}, #{state,jdbcType=INTEGER}, #{playCount,jdbcType=BIGINT}, 
+      #{commentCount,jdbcType=BIGINT}, #{attachementNames,jdbcType=VARCHAR}, #{catagory,jdbcType=LONGVARCHAR}, 
+      #{videos,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bilibili.pojo.VideoGroupWithBLOBs">
+    insert into videogroup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="authorId != null">
+        author_id,
+      </if>
+      <if test="brief != null">
+        brief,
+      </if>
+      <if test="coverUrl != null">
+        cover_url,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="istoll != null">
+        istoll,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="playCount != null">
+        play_count,
+      </if>
+      <if test="commentCount != null">
+        comment_count,
+      </if>
+      <if test="attachementNames != null">
+        attachement_names,
+      </if>
+      <if test="catagory != null">
+        catagory,
+      </if>
+      <if test="videos != null">
+        videos,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="brief != null">
+        #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null">
+        #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istoll != null">
+        #{istoll,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="playCount != null">
+        #{playCount,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null">
+        #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="attachementNames != null">
+        #{attachementNames,jdbcType=VARCHAR},
+      </if>
+      <if test="catagory != null">
+        #{catagory,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videos != null">
+        #{videos,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bilibili.pojo.VideoGroupExample" resultType="java.lang.Long">
+    select count(*) from videogroup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update videogroup
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorId != null">
+        author_id = #{record.authorId,jdbcType=BIGINT},
+      </if>
+      <if test="record.brief != null">
+        brief = #{record.brief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverUrl != null">
+        cover_url = #{record.coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.istoll != null">
+        istoll = #{record.istoll,jdbcType=BIT},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DECIMAL},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=INTEGER},
+      </if>
+      <if test="record.playCount != null">
+        play_count = #{record.playCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentCount != null">
+        comment_count = #{record.commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.attachementNames != null">
+        attachement_names = #{record.attachementNames,jdbcType=VARCHAR},
+      </if>
+      <if test="record.catagory != null">
+        catagory = #{record.catagory,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.videos != null">
+        videos = #{record.videos,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update videogroup
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      author_id = #{record.authorId,jdbcType=BIGINT},
+      brief = #{record.brief,jdbcType=VARCHAR},
+      cover_url = #{record.coverUrl,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      istoll = #{record.istoll,jdbcType=BIT},
+      price = #{record.price,jdbcType=DECIMAL},
+      state = #{record.state,jdbcType=INTEGER},
+      play_count = #{record.playCount,jdbcType=BIGINT},
+      comment_count = #{record.commentCount,jdbcType=BIGINT},
+      attachement_names = #{record.attachementNames,jdbcType=VARCHAR},
+      catagory = #{record.catagory,jdbcType=LONGVARCHAR},
+      videos = #{record.videos,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update videogroup
+    set id = #{record.id,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      author_id = #{record.authorId,jdbcType=BIGINT},
+      brief = #{record.brief,jdbcType=VARCHAR},
+      cover_url = #{record.coverUrl,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      istoll = #{record.istoll,jdbcType=BIT},
+      price = #{record.price,jdbcType=DECIMAL},
+      state = #{record.state,jdbcType=INTEGER},
+      play_count = #{record.playCount,jdbcType=BIGINT},
+      comment_count = #{record.commentCount,jdbcType=BIGINT},
+      attachement_names = #{record.attachementNames,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bilibili.pojo.VideoGroupWithBLOBs">
+    update videogroup
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="authorId != null">
+        author_id = #{authorId,jdbcType=BIGINT},
+      </if>
+      <if test="brief != null">
+        brief = #{brief,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null">
+        cover_url = #{coverUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="istoll != null">
+        istoll = #{istoll,jdbcType=BIT},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="playCount != null">
+        play_count = #{playCount,jdbcType=BIGINT},
+      </if>
+      <if test="commentCount != null">
+        comment_count = #{commentCount,jdbcType=BIGINT},
+      </if>
+      <if test="attachementNames != null">
+        attachement_names = #{attachementNames,jdbcType=VARCHAR},
+      </if>
+      <if test="catagory != null">
+        catagory = #{catagory,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videos != null">
+        videos = #{videos,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.bilibili.pojo.VideoGroupWithBLOBs">
+    update videogroup
+    set title = #{title,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=BIGINT},
+      brief = #{brief,jdbcType=VARCHAR},
+      cover_url = #{coverUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      istoll = #{istoll,jdbcType=BIT},
+      price = #{price,jdbcType=DECIMAL},
+      state = #{state,jdbcType=INTEGER},
+      play_count = #{playCount,jdbcType=BIGINT},
+      comment_count = #{commentCount,jdbcType=BIGINT},
+      attachement_names = #{attachementNames,jdbcType=VARCHAR},
+      catagory = #{catagory,jdbcType=LONGVARCHAR},
+      videos = #{videos,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bilibili.pojo.VideoGroup">
+    update videogroup
+    set title = #{title,jdbcType=VARCHAR},
+      author_id = #{authorId,jdbcType=BIGINT},
+      brief = #{brief,jdbcType=VARCHAR},
+      cover_url = #{coverUrl,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      istoll = #{istoll,jdbcType=BIT},
+      price = #{price,jdbcType=DECIMAL},
+      state = #{state,jdbcType=INTEGER},
+      play_count = #{playCount,jdbcType=BIGINT},
+      comment_count = #{commentCount,jdbcType=BIGINT},
+      attachement_names = #{attachementNames,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

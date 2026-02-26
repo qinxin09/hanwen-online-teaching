@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.bilibili.dao.CrawlerMapper">
+  <resultMap id="BaseResultMap" type="com.example.bilibili.pojo.Crawler">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="length" jdbcType="VARCHAR" property="length" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="play_count" jdbcType="VARCHAR" property="playCount" />
+    <result column="author_name" jdbcType="VARCHAR" property="authorName" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.example.bilibili.pojo.CrawlerWithBLOBs">
+    <result column="cover_url" jdbcType="LONGVARCHAR" property="coverUrl" />
+    <result column="video_url" jdbcType="LONGVARCHAR" property="videoUrl" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, length, title, play_count, author_name
+  </sql>
+  <sql id="Blob_Column_List">
+    cover_url, video_url
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.example.bilibili.pojo.CrawlerExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from crawler
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.example.bilibili.pojo.CrawlerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from crawler
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from crawler
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from crawler
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.example.bilibili.pojo.CrawlerExample">
+    delete from crawler
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.example.bilibili.pojo.CrawlerWithBLOBs">
+    insert into crawler (id, length, title, 
+      play_count, author_name, cover_url, 
+      video_url)
+    values (#{id,jdbcType=INTEGER}, #{length,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{playCount,jdbcType=VARCHAR}, #{authorName,jdbcType=VARCHAR}, #{coverUrl,jdbcType=LONGVARCHAR}, 
+      #{videoUrl,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.bilibili.pojo.CrawlerWithBLOBs">
+    insert into crawler
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="length != null">
+        length,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="playCount != null">
+        play_count,
+      </if>
+      <if test="authorName != null">
+        author_name,
+      </if>
+      <if test="coverUrl != null">
+        cover_url,
+      </if>
+      <if test="videoUrl != null">
+        video_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="length != null">
+        #{length,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="playCount != null">
+        #{playCount,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null">
+        #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null">
+        #{coverUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        #{videoUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.example.bilibili.pojo.CrawlerExample" resultType="java.lang.Long">
+    select count(*) from crawler
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update crawler
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.length != null">
+        length = #{record.length,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playCount != null">
+        play_count = #{record.playCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.authorName != null">
+        author_name = #{record.authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coverUrl != null">
+        cover_url = #{record.coverUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.videoUrl != null">
+        video_url = #{record.videoUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update crawler
+    set id = #{record.id,jdbcType=INTEGER},
+      length = #{record.length,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      play_count = #{record.playCount,jdbcType=VARCHAR},
+      author_name = #{record.authorName,jdbcType=VARCHAR},
+      cover_url = #{record.coverUrl,jdbcType=LONGVARCHAR},
+      video_url = #{record.videoUrl,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update crawler
+    set id = #{record.id,jdbcType=INTEGER},
+      length = #{record.length,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      play_count = #{record.playCount,jdbcType=VARCHAR},
+      author_name = #{record.authorName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.bilibili.pojo.CrawlerWithBLOBs">
+    update crawler
+    <set>
+      <if test="length != null">
+        length = #{length,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="playCount != null">
+        play_count = #{playCount,jdbcType=VARCHAR},
+      </if>
+      <if test="authorName != null">
+        author_name = #{authorName,jdbcType=VARCHAR},
+      </if>
+      <if test="coverUrl != null">
+        cover_url = #{coverUrl,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        video_url = #{videoUrl,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.example.bilibili.pojo.CrawlerWithBLOBs">
+    update crawler
+    set length = #{length,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      play_count = #{playCount,jdbcType=VARCHAR},
+      author_name = #{authorName,jdbcType=VARCHAR},
+      cover_url = #{coverUrl,jdbcType=LONGVARCHAR},
+      video_url = #{videoUrl,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.bilibili.pojo.Crawler">
+    update crawler
+    set length = #{length,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      play_count = #{playCount,jdbcType=VARCHAR},
+      author_name = #{authorName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
