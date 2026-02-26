@@ -2,3 +2,5 @@ node_modules
 二次开发
 数据库
 第一次答辩
+/**/*.md
+!README.md
